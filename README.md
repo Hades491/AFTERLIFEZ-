@@ -1,2 +1,2 @@
-# AFTERLIFEZ-
-an Association works on the Humankind
+# AFTERLIFEZ
+An association wok on the benefit of humankind
