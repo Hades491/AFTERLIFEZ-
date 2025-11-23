@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Tech Collection | AFTERLIFEZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #1a1a1a;
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
+            --text: #f8f8f8;
+            --text-secondary: #a1a1aa;
+            --card-bg: #18181b;
+            --border: #27272a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 140px 0 60px;
+            background: var(--secondary);
+            min-height: 100vh;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .search-box {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 15px;
+            color: var(--text);
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--accent-hover);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+
+        .product-image {
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .rating-count {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-view {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-view:hover {
+            background: var(--accent-hover);
+        }
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .product-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-cube"></i>
+                    AFTERLIFEZ<span>.</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Premium Tech Collection</h2>
+                <p class="section-subtitle">Curated selection of high-performance technology and accessories</p>
+            </div>
+
+            <div class="product-controls">
+                <div class="product-filters">
+                    <button class="filter-btn active" data-filter="all">All Products</button>
+                    <button class="filter-btn" data-filter="audio">Audio</button>
+                    <button class="filter-btn" data-filter="wearables">Wearables</button>
+                    <button class="filter-btn" data-filter="smart-home">Smart Home</button>
+                    <button class="filter-btn" data-filter="accessories">Accessories</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search products..." id="search-input">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+
+            <div class="no-results" id="no-results">
+                <i class="fas fa-search"></i>
+                <h3>No products found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "NeoSound Pro Wireless Earbuds",
+                category: "audio",
+                description: "Immersive sound with active noise cancellation and 30-hour battery life.",
+                price: 129.99,
+                originalPrice: 179.99,
+                rating: 4.5,
+                reviewCount: 4283,
+                badge: "Popular",
+                image: "https://m.media-amazon.com/images/I/71TPda7cwUL._AC_SL1500_.jpg"
+            },
+            {
+                id: 2,
+                name: "Chronos Series 5 Smartwatch",
+                category: "wearables",
+                description: "Advanced health monitoring with always-on display and premium build.",
+                price: 299.99,
+                originalPrice: 349.99,
+                rating: 4.0,
+                reviewCount: 2451,
+                badge: "New",
+                image: "https://m.media-amazon.com/images/I/71WkDpjH6mL._AC_SL1500_.jpg"
+            },
+            {
+                id: 3,
+                name: "Aura Voice Assistant Speaker",
+                category: "smart-home",
+                description: "Premium sound quality with built-in smart home control and voice assistant.",
+                price: 199.99,
+                originalPrice: 249.99,
+                rating: 5.0,
+                reviewCount: 3827,
+                badge: "",
+                image: "https://m.media-amazon.com/images/I/71qod7gCg+L._AC_SL1500_.jpg"
+            },
+            {
+                id: 4,
+                name: "VitaTrack Fitness Band",
+                category: "wearables",
+                description: "24/7 heart rate monitoring, sleep tracking, and 10-day battery life.",
+                price: 79.99,
+                originalPrice: 99.99,
+                rating: 4.5,
+                reviewCount: 5192,
+                badge: "",
+                image: "https://m.media-amazon.com/images/I/71S4sIPFvBL._AC_SL1500_.jpg"
+            },
+            {
+                id: 5,
+                name: "Quantum Mechanical Keyboard",
+                category: "accessories",
+                description: "Tactile mechanical switches with RGB lighting and programmable macros.",
+                price: 149.99,
+                originalPrice: 199.99,
+                rating: 4.8,
+                reviewCount: 3127,
+                badge: "Best Seller",
+                image: "https://m.media-amazon.com/images/I/71gY5MuC3CL._AC_SL1500_.jpg"
+            },
+            {
+                id: 6,
+                name: "Zenith 4K Monitor",
+                category: "accessories",
+                description: "27-inch 4K UHD display with HDR support and ultra-thin bezels.",
+                price: 399.99,
+                originalPrice: 499.99,
+                rating: 4.7,
+                reviewCount: 1843,
+                badge: "",
+                image: "https://m.media-amazon.com/images/I/81QpkIctqPL._AC_SL1500_.jpg"
+            },
+            {
+                id: 7,
+                name: "Nova Wireless Charger",
+                category: "accessories",
+                description: "Fast wireless charging pad compatible with all Qi-enabled devices.",
+                price: 39.99,
+                originalPrice: 59.99,
+                rating: 4.3,
+                reviewCount: 6274,
+                badge: "Sale",
+                image: "https://m.media-amazon.com/images/I/61DAvRwpk-L._AC_SL1500_.jpg"
+            },
+            {
+                id: 8,
+                name: "Echo Smart Home Hub",
+                category: "smart-home",
+                description: "Control your smart home with voice commands and intuitive touch display.",
+                price: 89.99,
+                originalPrice: 129.99,
+                rating: 4.2,
+                reviewCount: 8921,
+                badge: "",
+                image: "https://m.media-amazon.com/images/I/61Fj+5LqZ3L._AC_SL1000_.jpg"
+            }
+        ];
+
+        // DOM elements
+        const productsContainer = document.getElementById('products-container');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-btn');
+        const noResults = document.getElementById('no-results');
+
+        // Current filter state
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts(products);
+            setupEventListeners();
+        });
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update filter and render products
+                    currentFilter = this.getAttribute('data-filter');
+                    filterProducts();
+                });
+            });
+
+            // Search functionality
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // Perform search
+        function performSearch() {
+            currentSearch = searchInput.value.toLowerCase().trim();
+            filterProducts();
+        }
+
+        // Filter products based on current filter and search
+        function filterProducts() {
+            let filteredProducts = products;
+
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.category === currentFilter
+                );
+            }
+
+            // Apply search filter
+            if (currentSearch) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.name.toLowerCase().includes(currentSearch) ||
+                    product.description.toLowerCase().includes(currentSearch)
+                );
+            }
+
+            // Render filtered products or show no results message
+            if (filteredProducts.length > 0) {
+                renderProducts(filteredProducts);
+                noResults.style.display = 'none';
+            } else {
+                productsContainer.innerHTML = '';
+                noResults.style.display = 'block';
+            }
+        }
+
+        // Render products to the DOM
+        function renderProducts(productsToRender) {
+            productsContainer.innerHTML = '';
+            
+            productsToRender.forEach(product => {
+                const productCard = createProductCard(product);
+                productsContainer.appendChild(productCard);
+            });
+        }
+
+        // Create a product card element
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            // Calculate discount percentage
+            const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+            
+            // Generate star rating HTML
+            const starsHTML = generateStarRating(product.rating);
+            
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                </div>
+                <div class="product-info">
+                    <div class="product-category">${formatCategory(product.category)}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-price">
+                        <span class="current-price">$${product.price}</span>
+                        <span class="original-price">$${product.originalPrice}</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="stars">${starsHTML}</div>
+                        <span class="rating-count">(${product.reviewCount})</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="#" class="action-btn btn-view">View Product</a>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Generate star rating HTML
+        function generateStarRating(rating) {
+            let starsHTML = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+            
+            return starsHTML;
+        }
+
+        // Format category for display
+        function formatCategory(category) {
+            return category.split('-').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+    </script>
+</body>
+</html>
